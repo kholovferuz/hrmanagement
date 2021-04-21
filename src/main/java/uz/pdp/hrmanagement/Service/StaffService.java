@@ -5,13 +5,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import uz.pdp.hrmanagement.DTO.SalaryDTO;
-import uz.pdp.hrmanagement.DTO.TurniketDTO;
-import uz.pdp.hrmanagement.DTO.TurniketHistoryDTO;
 import uz.pdp.hrmanagement.Entity.*;
 import uz.pdp.hrmanagement.Entity.enums.TaskStatus;
 import uz.pdp.hrmanagement.Repository.*;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;

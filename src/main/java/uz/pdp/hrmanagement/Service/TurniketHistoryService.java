@@ -1,15 +1,12 @@
 package uz.pdp.hrmanagement.Service;
 
-import org.apache.tomcat.jni.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uz.pdp.hrmanagement.DTO.TurniketHistoryDTO;
 import uz.pdp.hrmanagement.Entity.Turniket;
 import uz.pdp.hrmanagement.Entity.TurniketHistory;
-import uz.pdp.hrmanagement.Entity.User;
 import uz.pdp.hrmanagement.Repository.TurniketHistoryRepository;
 import uz.pdp.hrmanagement.Repository.TurniketRepository;
-import uz.pdp.hrmanagement.Repository.UserRepository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

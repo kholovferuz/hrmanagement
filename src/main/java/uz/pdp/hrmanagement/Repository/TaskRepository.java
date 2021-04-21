@@ -2,7 +2,6 @@ package uz.pdp.hrmanagement.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import uz.pdp.hrmanagement.Entity.Task;
-import uz.pdp.hrmanagement.Entity.User;
 import uz.pdp.hrmanagement.Entity.enums.TaskStatus;
 
 import java.util.List;
