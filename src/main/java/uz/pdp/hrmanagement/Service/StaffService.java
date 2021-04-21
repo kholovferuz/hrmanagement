@@ -5,13 +5,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import uz.pdp.hrmanagement.DTO.SalaryDTO;
+import uz.pdp.hrmanagement.DTO.TurniketDTO;
+import uz.pdp.hrmanagement.DTO.TurniketHistoryDTO;
 import uz.pdp.hrmanagement.Entity.*;
 import uz.pdp.hrmanagement.Entity.enums.TaskStatus;
 import uz.pdp.hrmanagement.Repository.*;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -26,9 +26,11 @@ public class StaffService {
     @Autowired
     TaskRepository taskRepository;
     @Autowired
-    TurniketRepository turniketRepository;
+    TurniketHistoryRepository turniketHistoryRepository;
     @Autowired
     SalaryRepository salaryRepository;
+    @Autowired
+    TurniketRepository turniketRepository;
 
     // hr manager va director barcha xodimlar ro'yxatini ko'radi
     public Response getAllEmployees() {
@@ -61,12 +63,12 @@ public class StaffService {
         if (optionalUser.isEmpty()) {
             return new Response("User with this id is not found!", false);
         }
-        List<Turniket> turniketList = turniketRepository.findAllByUserId(id);
-        if (turniketList.isEmpty()) {
+        List<TurniketHistory> turniketHistoryList = turniketHistoryRepository.findAllByTurniket_UserId(id);
+        if (turniketHistoryList.isEmpty()) {
             return new Response("No information about user attendance found!", false);
         }
 
-        return new Response("Followings are the attendance rate of the chosen user: ", true, turniketList);
+        return new Response("Followings are the attendance rate of the chosen user: ", true, turniketHistoryList);
     }
 
     // xodimlarning kelib ketish vaqtini korish
@@ -79,12 +81,12 @@ public class StaffService {
                 return new Response("Only director and hr manager can see this list", false);
             }
         }
-        List<Turniket> turniketList = turniketRepository.findAll();
-        if (turniketList.isEmpty()) {
+        List<TurniketHistory> turniketHistoryList = turniketHistoryRepository.findAll();
+        if (turniketHistoryList.isEmpty()) {
             return new Response("No information about user attendance found!", false);
         }
 
-        return new Response("Followings are the list of users by attendance rate: ", true, turniketList);
+        return new Response("Followings are the list of users by attendance rate: ", true, turniketHistoryList);
     }
 
     // faqat to'liq bajarilgan vazifalarning ro'yxati
@@ -175,6 +177,26 @@ public class StaffService {
         return new Response("The list of tasks", true, taskList);
     }
 
-
+    public Response getTurniketHistoryByDate(TurniketHistory turniketHistory, Integer turniketId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        Set<Role> roles = user.getRoles();
+        for (Role role : roles) {
+            if (role.getRoleName().name().equals("MANAGER") || role.getRoleName().name().equals("WORKER")) {
+                return new Response("Only director and hr manager can see this list", false);
+            }
+        }
+        Optional<Turniket> optionalTurniket = turniketRepository.findById(turniketId);
+        if (optionalTurniket.isEmpty()){
+            return new Response("Turniket with this id is not found",false);
+        }
+        boolean existsByDate = turniketHistoryRepository.existsByDate(turniketHistory.getDate());
+        if (!existsByDate){
+            return new Response("Turniket History in this date does not exist",false);
+        }
+        TurniketHistory repositoryByDate = turniketHistoryRepository.findByDateAndTurniketId(turniketHistory.getDate(),turniketId);
+            return new Response("Followings are the attendance of "+optionalTurniket.get().getUser().getFirstName()+" "+
+                    optionalTurniket.get().getUser().getLastName() ,true,repositoryByDate);
+    }
 }
 

@@ -17,7 +17,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "userlar")
+@Entity(name = "users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue

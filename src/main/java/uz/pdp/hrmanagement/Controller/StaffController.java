@@ -5,6 +5,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.hrmanagement.DTO.SalaryDTO;
+import uz.pdp.hrmanagement.Entity.TurniketHistory;
 import uz.pdp.hrmanagement.Service.Response;
 import uz.pdp.hrmanagement.Service.StaffService;
 
@@ -54,10 +55,15 @@ public class StaffController {
         return ResponseEntity.status(userIdAndMonth.isSuccess() ? 200 : 409).body(userIdAndMonth);
     }
 
-
     @GetMapping("/tasksAndUsers")
     public HttpEntity<?> tasksAndUsers() {
         Response tasksAndUsers = staffService.getTasksAndUsers();
         return ResponseEntity.ok(tasksAndUsers);
+    }
+
+    @GetMapping("/getTurniketHistoryByDate/{id}")
+    public HttpEntity<?> getTurniketHistoryByDate(@RequestBody TurniketHistory turniketHistory, @PathVariable Integer id) {
+        Response turniketHistoryByDate = staffService.getTurniketHistoryByDate(turniketHistory, id);
+        return ResponseEntity.status(turniketHistoryByDate.isSuccess() ? 201 : 409).body(turniketHistoryByDate);
     }
 }

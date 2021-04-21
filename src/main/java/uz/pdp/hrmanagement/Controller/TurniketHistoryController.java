@@ -7,19 +7,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uz.pdp.hrmanagement.DTO.TurniketDTO;
+import uz.pdp.hrmanagement.DTO.TurniketHistoryDTO;
 import uz.pdp.hrmanagement.Service.Response;
-import uz.pdp.hrmanagement.Service.TurniketService;
+import uz.pdp.hrmanagement.Service.TurniketHistoryService;
 
 @RestController
 @RequestMapping("/api/auth")
-public class TurniketController {
+public class TurniketHistoryController {
     @Autowired
-    TurniketService turniketService;
+    TurniketHistoryService turniketHistoryService;
 
-    @PostMapping("/addTurniket")
-    public HttpEntity<?> addTurniket(@RequestBody TurniketDTO turniketDTO) {
-        Response addTurniket = turniketService.addTurniket(turniketDTO);
-        return ResponseEntity.status(addTurniket.isSuccess() ? 200 : 409).body(addTurniket);
+    @PostMapping("/enterOrExit")
+    public HttpEntity<?> enterOrExit(@RequestBody TurniketHistoryDTO turniketHistoryDTO) {
+        Response enterOrExit = turniketHistoryService.enterOrExit(turniketHistoryDTO);
+        return ResponseEntity.status(enterOrExit.isSuccess() ? 201 : 409).body(enterOrExit);
     }
 }

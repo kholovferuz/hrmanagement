@@ -63,7 +63,7 @@ public class AuthService implements UserDetailsService {
         User userContext = (User) authentication.getPrincipal();
         Set<Role> roles = userContext.getRoles();
         int roleId = 0;
-        for (Role role : roles){
+        for (Role role : roles) {
 
             if (role.getRoleName().name().equals("DIRECTOR")) {
                 roleId = roleRepository.findByRoleName(RoleName.DIRECTOR).getId();
@@ -72,44 +72,33 @@ public class AuthService implements UserDetailsService {
             }
 
 
-        User addNewUser = userData(addUserDTO);
-        Set<Role> roleSet = addNewUser.getRoles();
+            User addNewUser = userData(addUserDTO);
+            Set<Role> roleSet = addNewUser.getRoles();
 
 
-        for (Role role2 : roleSet) {
-            if (roleId == roleRepository.findByRoleName(RoleName.HR_MANAGER).getId() &&
-                    !role2.getRoleName().name().equals("WORKER")) {
-                return new Response("HR MANAGER can add only workers!", false);
+            for (Role role2 : roleSet) {
+                if (roleId == roleRepository.findByRoleName(RoleName.HR_MANAGER).getId() &&
+                        !role2.getRoleName().name().equals("WORKER")) {
+                    return new Response("HR MANAGER can add only workers!", false);
 
 
-            } else if (roleId == roleRepository.findByRoleName(RoleName.DIRECTOR).getId() &&
-                    role2.getRoleName().name().equals("WORKER")) {
-                return new Response("DIRECTOR can add only managers, not workers!", false);
+                } else if (roleId == roleRepository.findByRoleName(RoleName.DIRECTOR).getId() &&
+                        role2.getRoleName().name().equals("WORKER")) {
+                    return new Response("DIRECTOR can add only managers, not workers!", false);
+                }
             }
-        }
 
 
-        Set<Integer> rolesId = addUserDTO.getRolesId();
-        for (Integer integer : rolesId) {
-            boolean exists = roleRepository.existsById(integer);
-            if (exists && integer == 3) {
-                return new Response("HR MANAGER already exists. The company can have only one HR_MANAGER", false);
-            } else if (exists && integer == 1) {
-                return new Response("DIRECTOR already exists. The company can have only one DIRECTOR", false);
+            boolean existsByEmail = userRepository.existsByEmail(addUserDTO.getEmail());
+            if (existsByEmail) {
+                return new Response("User with this email already exists", false);
             }
+
+            User addedUser = userRepository.save(addNewUser);
+
+            // emailga yuborish
+            sendEmail(addedUser.getEmail(), addedUser.getEmailCode());
         }
-
-
-        boolean existsByEmail = userRepository.existsByEmail(addUserDTO.getEmail());
-        if (existsByEmail) {
-            return new Response("User with this email already exists", false);
-        }
-
-        User addedUser = userRepository.save(addNewUser);
-
-        // emailga yuborish
-        sendEmail(addedUser.getEmail(), addedUser.getEmailCode());
-    }
         return new Response("Successfully added. Now, the user should set password and verify!", true);
 
     }

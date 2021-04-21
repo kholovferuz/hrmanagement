@@ -10,7 +10,7 @@ import uz.pdp.hrmanagement.Service.AuthService;
 import uz.pdp.hrmanagement.Service.Response;
 
 @RestController
-@RequestMapping("/api/auth/")
+@RequestMapping("/api/auth")
 public class AuthController {
     @Autowired
     AuthService authService;

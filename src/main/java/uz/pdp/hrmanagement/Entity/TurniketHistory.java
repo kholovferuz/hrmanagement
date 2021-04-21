@@ -5,16 +5,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Entity
-public class Turniket {
+public class TurniketHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
-    private User user;
+    private boolean enterOrExit;
+
+    private LocalDate date;
+
+    private long time;
+
+    @ManyToOne
+    private Turniket turniket;
 }

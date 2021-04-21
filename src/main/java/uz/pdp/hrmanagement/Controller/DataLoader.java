@@ -10,6 +10,7 @@ import uz.pdp.hrmanagement.Entity.enums.RoleName;
 import uz.pdp.hrmanagement.Repository.RoleRepository;
 import uz.pdp.hrmanagement.Repository.UserRepository;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 @Component
@@ -26,15 +27,26 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (initialMode.equals("always")){
-            User director=new User();
+        if (initialMode.equals("always")) {
+            User director = new User();
             director.setFirstName("Feruz");
             director.setLastName("Kholov");
             director.setEmail("xolov.2021@mail.ru");
             director.setPassword(passwordEncoder.encode("Harvard123"));
             director.setRoles(Collections.singleton(roleRepository.findByRoleName(RoleName.DIRECTOR)));
             director.setEnabled(true);
-            userRepository.save(director);
+
+
+            User hrManager = new User();
+            hrManager.setFirstName("Bekhruz");
+            hrManager.setLastName("Kholov");
+            hrManager.setEmail("bexruzjonxolov.1996@gmail.com");
+            hrManager.setPassword(passwordEncoder.encode("0000"));
+            hrManager.setRoles(Collections.singleton(roleRepository.findByRoleName(RoleName.HR_MANAGER)));
+            hrManager.setEnabled(true);
+
+            userRepository.saveAll(Arrays.asList(director, hrManager));
         }
+
     }
 }
