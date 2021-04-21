@@ -62,7 +62,7 @@ public class StaffController {
     }
 
     @GetMapping("/getTurniketHistoryByDate/{id}")
-    public HttpEntity<?> getTurniketHistoryByDate(@RequestBody TurniketHistory turniketHistory, @PathVariable Integer id) {
+    public HttpEntity<?> getTurniketHistoryByDate(@RequestBody TurniketHistory turniketHistory, @PathVariable UUID id) {
         Response turniketHistoryByDate = staffService.getTurniketHistoryByDate(turniketHistory, id);
         return ResponseEntity.status(turniketHistoryByDate.isSuccess() ? 201 : 409).body(turniketHistoryByDate);
     }

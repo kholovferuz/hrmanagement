@@ -32,7 +32,7 @@ public class DataLoader implements CommandLineRunner {
             director.setFirstName("Feruz");
             director.setLastName("Kholov");
             director.setEmail("xolov.2021@mail.ru");
-            director.setPassword(passwordEncoder.encode("Harvard123"));
+            director.setPassword(passwordEncoder.encode(""));
             director.setRoles(Collections.singleton(roleRepository.findByRoleName(RoleName.DIRECTOR)));
             director.setEnabled(true);
 

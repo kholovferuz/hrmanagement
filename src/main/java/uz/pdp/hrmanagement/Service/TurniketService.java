@@ -34,6 +34,11 @@ public class TurniketService {
         if (optionalUser.isEmpty()) {
             return new Response("User with this id is not found", false);
         }
+        boolean byUserId = turniketRepository.existsByUserId(turniketDTO.getUserId());
+        if (byUserId) {
+            return new Response("Turniket with this user already exists", false);
+        }
+
         Turniket turniket = new Turniket();
         turniket.setUser(optionalUser.get());
         turniketRepository.save(turniket);

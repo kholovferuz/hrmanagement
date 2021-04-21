@@ -72,7 +72,7 @@ public class StaffService {
     }
 
     // xodimlarning kelib ketish vaqtini korish
-    public Response getAllTurniketByUsers(){
+    public Response getAllTurniketByUsers() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
         Set<Role> roles = user.getRoles();
@@ -177,7 +177,7 @@ public class StaffService {
         return new Response("The list of tasks", true, taskList);
     }
 
-    public Response getTurniketHistoryByDate(TurniketHistory turniketHistory, Integer turniketId){
+    public Response getTurniketHistoryByDate(TurniketHistory turniketHistory, UUID userId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
         Set<Role> roles = user.getRoles();
@@ -186,17 +186,17 @@ public class StaffService {
                 return new Response("Only director and hr manager can see this list", false);
             }
         }
-        Optional<Turniket> optionalTurniket = turniketRepository.findById(turniketId);
-        if (optionalTurniket.isEmpty()){
-            return new Response("Turniket with this id is not found",false);
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isEmpty()) {
+            return new Response("User with this id is not found", false);
         }
         boolean existsByDate = turniketHistoryRepository.existsByDate(turniketHistory.getDate());
-        if (!existsByDate){
-            return new Response("Turniket History in this date does not exist",false);
+        if (!existsByDate) {
+            return new Response("Turniket History in this date does not exist", false);
         }
-        TurniketHistory repositoryByDate = turniketHistoryRepository.findByDateAndTurniketId(turniketHistory.getDate(),turniketId);
-            return new Response("Followings are the attendance of "+optionalTurniket.get().getUser().getFirstName()+" "+
-                    optionalTurniket.get().getUser().getLastName() ,true,repositoryByDate);
+        List<TurniketHistory> byDateAndUserId = turniketHistoryRepository.findByDateAndUserId(turniketHistory.getDate(), userId);
+        return new Response("Followings are the attendance of " + optionalUser.get().getFirstName() + " " +
+                optionalUser.get().getLastName(), true, byDateAndUserId);
     }
 }
 

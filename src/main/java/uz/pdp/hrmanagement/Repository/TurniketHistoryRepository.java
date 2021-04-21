@@ -1,6 +1,7 @@
 package uz.pdp.hrmanagement.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import uz.pdp.hrmanagement.Entity.TurniketHistory;
 
 import java.time.LocalDate;
@@ -11,8 +12,8 @@ public interface TurniketHistoryRepository extends JpaRepository<TurniketHistory
 
     List<TurniketHistory> findAllByTurniket_UserId(UUID turniket_user_id);
 
-    TurniketHistory findByDateAndTurniketId(LocalDate date, Integer turniket_id);
-
+    @Query(value = "select * from turniket_history join turniket t on t.id = turniket_history.turniket_id where (t.user_id= :userId and turniket_history.date= :date)", nativeQuery = true)
+    List<TurniketHistory> findByDateAndUserId(LocalDate date, UUID userId);
 
     boolean existsByDate(LocalDate date);
 }
