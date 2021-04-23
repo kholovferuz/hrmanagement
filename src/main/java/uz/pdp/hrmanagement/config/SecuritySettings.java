@@ -19,6 +19,12 @@ import uz.pdp.hrmanagement.service.AuthService;
 
 import java.util.Properties;
 
+/**
+ * This is HR MANAGEMENT system, which is specialised in controlling Employee attendance,
+ * task completion, and computing and paying their salaries.
+ * Java, Spring Boot, Spring Security(JWT) and Java Email Messaging are used.
+ */
+
 @Configuration
 @EnableWebSecurity
 public class SecuritySettings extends WebSecurityConfigurerAdapter {
