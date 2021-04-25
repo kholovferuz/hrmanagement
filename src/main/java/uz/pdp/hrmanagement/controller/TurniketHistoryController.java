@@ -12,7 +12,7 @@ import uz.pdp.hrmanagement.service.Response;
 import uz.pdp.hrmanagement.service.TurniketHistoryService;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api")
 public class TurniketHistoryController {
     @Autowired
     TurniketHistoryService turniketHistoryService;

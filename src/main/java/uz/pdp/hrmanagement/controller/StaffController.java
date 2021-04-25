@@ -12,7 +12,7 @@ import uz.pdp.hrmanagement.service.StaffService;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/")
 public class StaffController {
     @Autowired
     StaffService staffService;

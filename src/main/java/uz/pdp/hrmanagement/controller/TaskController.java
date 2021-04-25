@@ -11,7 +11,7 @@ import uz.pdp.hrmanagement.service.TaskService;
 
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api")
 public class TaskController {
     @Autowired
     TaskService taskService;
