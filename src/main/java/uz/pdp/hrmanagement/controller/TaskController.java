@@ -1,13 +1,18 @@
 package uz.pdp.hrmanagement.controller;
 
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.hrmanagement.dto.TaskDTO;
 import uz.pdp.hrmanagement.service.Response;
 import uz.pdp.hrmanagement.service.TaskService;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -38,5 +43,18 @@ public class TaskController {
     public HttpEntity<?> completeTask(@PathVariable Integer id) {
         Response taskCompleted = taskService.taskCompleted(id);
         return ResponseEntity.status(taskCompleted.isSuccess() ? 200 : 409).body(taskCompleted);
+    }
+
+    // EXEPTION HANDLER
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidException(MethodArgumentNotValidException ex) {
+        Map<String, String> mistakes = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            mistakes.put(fieldName, errorMessage);
+        });
+        return mistakes;
     }
 }

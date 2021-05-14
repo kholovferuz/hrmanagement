@@ -2,7 +2,10 @@ package uz.pdp.hrmanagement.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.hrmanagement.dto.SalaryDTO;
 import uz.pdp.hrmanagement.entity.TurniketHistory;
@@ -11,6 +14,8 @@ import uz.pdp.hrmanagement.service.StaffService;
 import uz.pdp.hrmanagement.service.StaffServiceImpl;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -69,5 +74,18 @@ public class StaffController {
     public HttpEntity<?> getTurniketHistoryByDate(@Valid @RequestBody TurniketHistory turniketHistory, @PathVariable UUID id) {
         Response turniketHistoryByDate = staffService.getTurniketHistoryByDate(turniketHistory, id);
         return ResponseEntity.status(turniketHistoryByDate.isSuccess() ? 201 : 409).body(turniketHistoryByDate);
+    }
+
+    // EXEPTION HANDLER
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidException(MethodArgumentNotValidException ex) {
+        Map<String, String> mistakes = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            mistakes.put(fieldName, errorMessage);
+        });
+        return mistakes;
     }
 }

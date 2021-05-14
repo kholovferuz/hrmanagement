@@ -1,7 +1,10 @@
 package uz.pdp.hrmanagement.controller;
 
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.hrmanagement.dto.AddUserDTO;
 import uz.pdp.hrmanagement.dto.LoginDTO;
@@ -9,6 +12,9 @@ import uz.pdp.hrmanagement.service.AuthService;
 import uz.pdp.hrmanagement.service.Response;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -38,5 +44,16 @@ public class AuthController {
         return ResponseEntity.status(verifyEmail.isSuccess() ? 200 : 409).body(verifyEmail);
     }
 
-
+    // EXEPTION HANDLER
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidException(MethodArgumentNotValidException ex) {
+        Map<String, String> mistakes = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            mistakes.put(fieldName, errorMessage);
+        });
+        return mistakes;
+    }
 }
