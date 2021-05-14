@@ -21,7 +21,7 @@ public class JWTFilter extends OncePerRequestFilter {
     final JWTProvider jwtProvider;
     final AuthServiceImpl authServiceImpl;
 
-    @Autowired
+
     public JWTFilter(JWTProvider jwtProvider, @Lazy AuthServiceImpl authServiceImpl) {
         this.jwtProvider = jwtProvider;
         this.authServiceImpl = authServiceImpl;

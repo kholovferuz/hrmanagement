@@ -20,7 +20,7 @@ public class TurniketServiceImpl implements TurniketService {
     final TurniketRepository turniketRepository;
     final UserRepository userRepository;
 
-    @Autowired
+
     public TurniketServiceImpl(TurniketRepository turniketRepository, UserRepository userRepository) {
         this.turniketRepository = turniketRepository;
         this.userRepository = userRepository;

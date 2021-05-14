@@ -34,7 +34,7 @@ public class SecuritySettings extends WebSecurityConfigurerAdapter {
     final JWTFilter jwtFilter;
     final AuthServiceImpl authService;
 
-    @Autowired
+
     public SecuritySettings(JWTFilter jwtFilter, @Lazy AuthServiceImpl authService) {
         this.jwtFilter = jwtFilter;
         this.authService = authService;
@@ -44,7 +44,6 @@ public class SecuritySettings extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .userDetailsService(authService).passwordEncoder(passwordEncoder());
-
     }
 
     @Bean

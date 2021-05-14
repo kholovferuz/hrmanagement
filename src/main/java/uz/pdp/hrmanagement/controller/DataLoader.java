@@ -20,7 +20,6 @@ public class DataLoader implements CommandLineRunner {
     final UserRepository userRepository;
     final PasswordEncoder passwordEncoder;
 
-    @Autowired
     public DataLoader(RoleRepository roleRepository,
                       UserRepository userRepository,
                       PasswordEncoder passwordEncoder) {
@@ -40,7 +39,7 @@ public class DataLoader implements CommandLineRunner {
             director.setFirstName("Feruz");
             director.setLastName("Kholov");
             director.setEmail("xolov.2021@mail.ru");
-            director.setPassword(passwordEncoder.encode(""));
+            director.setPassword(passwordEncoder.encode("1111"));
             director.setRoles(Collections.singleton(roleRepository.findByRoleName(RoleName.DIRECTOR)));
             director.setEnabled(true);
 

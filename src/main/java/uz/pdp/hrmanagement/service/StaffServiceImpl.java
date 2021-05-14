@@ -25,7 +25,7 @@ public class StaffServiceImpl implements StaffService {
     final SalaryRepository salaryRepository;
     final TurniketRepository turniketRepository;
 
-    @Autowired
+
     public StaffServiceImpl(@Lazy UserRepository userRepository,
                             RoleRepository roleRepository,
                             TaskRepository taskRepository,

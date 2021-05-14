@@ -28,7 +28,7 @@ public class TaskServiceImpl implements TaskService {
     final JavaMailSender javaMailSender;
     final RoleRepository roleRepository;
 
-    @Autowired
+
     public TaskServiceImpl(@Lazy TaskRepository taskRepository,
                            UserRepository userRepository,
                            JavaMailSender javaMailSender,

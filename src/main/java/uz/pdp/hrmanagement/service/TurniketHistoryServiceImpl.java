@@ -19,7 +19,7 @@ public class TurniketHistoryServiceImpl implements TurniketHistoryService {
     final TurniketHistoryRepository turniketHistoryRepository;
     final TurniketRepository turniketRepository;
 
-    @Autowired
+
     public TurniketHistoryServiceImpl(@Lazy TurniketHistoryRepository turniketHistoryRepository,
                                       TurniketRepository turniketRepository) {
         this.turniketHistoryRepository = turniketHistoryRepository;

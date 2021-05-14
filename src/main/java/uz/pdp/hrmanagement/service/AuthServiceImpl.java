@@ -37,7 +37,7 @@ public class AuthServiceImpl implements AuthService, UserDetailsService {
     final AuthenticationManager authenticationManager;
     final JWTProvider jwtProvider;
 
-    @Autowired
+
     public AuthServiceImpl(@Lazy UserRepository userRepository,
                            JavaMailSender javaMailSender,
                            PasswordEncoder passwordEncoder,
