@@ -6,7 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import uz.pdp.hrmanagement.service.AuthService;
+import uz.pdp.hrmanagement.service.AuthServiceImpl;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -19,7 +19,7 @@ public class JWTFilter extends OncePerRequestFilter {
     @Autowired
     JWTProvider jwtProvider;
     @Autowired
-    AuthService authService;
+    AuthServiceImpl authServiceImpl;
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
@@ -34,7 +34,7 @@ public class JWTFilter extends OncePerRequestFilter {
 
                 if (usernameFromToken != null) {
                     //getting userdetail by username
-                    UserDetails userDetails = authService.loadUserByUsername(usernameFromToken);
+                    UserDetails userDetails = authServiceImpl.loadUserByUsername(usernameFromToken);
 
                     // creating authentication by userdetails
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails,

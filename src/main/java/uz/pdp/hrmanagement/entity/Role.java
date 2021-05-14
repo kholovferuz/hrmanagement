@@ -6,7 +6,6 @@ import uz.pdp.hrmanagement.entity.enums.RoleName;
 
 import javax.persistence.*;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

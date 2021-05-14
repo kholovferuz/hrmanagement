@@ -15,7 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import uz.pdp.hrmanagement.jwt.JWTFilter;
-import uz.pdp.hrmanagement.service.AuthService;
+import uz.pdp.hrmanagement.service.AuthServiceImpl;
 
 import java.util.Properties;
 
@@ -31,12 +31,12 @@ public class SecuritySettings extends WebSecurityConfigurerAdapter {
     @Autowired
     JWTFilter jwtFilter;
     @Autowired
-    AuthService authService;
+    AuthServiceImpl authServiceImpl;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(authService).passwordEncoder(passwordEncoder());
+                .userDetailsService(authServiceImpl).passwordEncoder(passwordEncoder());
 
     }
 
