@@ -1,6 +1,5 @@
 package uz.pdp.hrmanagement.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import uz.pdp.hrmanagement.dto.TurniketHistoryDTO;
 import uz.pdp.hrmanagement.service.Response;
 import uz.pdp.hrmanagement.service.TurniketHistoryService;
-import uz.pdp.hrmanagement.service.TurniketHistoryServiceImpl;
 
 import javax.validation.Valid;
 import java.util.HashMap;
