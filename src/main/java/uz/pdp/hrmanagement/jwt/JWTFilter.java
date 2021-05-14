@@ -1,6 +1,7 @@
 package uz.pdp.hrmanagement.jwt;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,10 +17,15 @@ import java.io.IOException;
 
 @Component
 public class JWTFilter extends OncePerRequestFilter {
+
+    final JWTProvider jwtProvider;
+    final AuthServiceImpl authServiceImpl;
+
     @Autowired
-    JWTProvider jwtProvider;
-    @Autowired
-    AuthServiceImpl authServiceImpl;
+    public JWTFilter(JWTProvider jwtProvider, @Lazy AuthServiceImpl authServiceImpl) {
+        this.jwtProvider = jwtProvider;
+        this.authServiceImpl = authServiceImpl;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {

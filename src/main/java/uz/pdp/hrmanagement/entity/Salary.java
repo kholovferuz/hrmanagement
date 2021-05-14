@@ -26,6 +26,6 @@ public class Salary {
     @CreationTimestamp
     private Timestamp paidTime;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User toUser;
 }

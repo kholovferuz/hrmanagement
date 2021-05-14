@@ -12,21 +12,21 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddUserDTO {
-    @NotNull
+    @NotNull(message = "First name should not be empty")
     @Size(min = 3, max = 50)
     private String firstName;
 
-    @NotNull
+    @NotNull(message = "Last name should not be empty")
     @Size(min = 3, max = 50)
     private String lastName;
 
-    @NotNull
+    @NotNull(message = "Email should not be empty")
     @Email
     private String email;
 
-    @NotNull
+    @NotNull(message = "Password should not be empty")
     private String password;
 
-    @NotNull
+    @NotNull(message = "Role id should not be empty")
     private Set<Integer> rolesId;
 }

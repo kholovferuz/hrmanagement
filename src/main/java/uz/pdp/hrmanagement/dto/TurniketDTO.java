@@ -1,6 +1,5 @@
 package uz.pdp.hrmanagement.dto;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +9,6 @@ import java.util.UUID;
 @Getter
 @Setter
 public class TurniketDTO {
-    @NotNull
+    @NotNull(message = "UserId should not be empty")
     private UUID userId;
 }

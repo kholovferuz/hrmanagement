@@ -3,6 +3,7 @@ package uz.pdp.hrmanagement.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,15 +29,21 @@ import java.util.Properties;
 @Configuration
 @EnableWebSecurity
 public class SecuritySettings extends WebSecurityConfigurerAdapter {
+
+
+    final JWTFilter jwtFilter;
+    final AuthServiceImpl authService;
+
     @Autowired
-    JWTFilter jwtFilter;
-    @Autowired
-    AuthServiceImpl authServiceImpl;
+    public SecuritySettings(JWTFilter jwtFilter, @Lazy AuthServiceImpl authService) {
+        this.jwtFilter = jwtFilter;
+        this.authService = authService;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(authServiceImpl).passwordEncoder(passwordEncoder());
+                .userDetailsService(authService).passwordEncoder(passwordEncoder());
 
     }
 

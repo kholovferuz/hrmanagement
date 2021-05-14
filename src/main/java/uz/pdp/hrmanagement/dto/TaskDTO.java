@@ -11,12 +11,12 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TaskDTO {
-    @NotNull
+    @NotNull(message = "Name should not be empty")
     private String name;
-    @NotNull
+    @NotNull(message = "Description should not be empty")
     private String description;
-    @NotNull
+    @NotNull(message = "Deadline should not be empty")
     private Timestamp deadline;
-    @NotNull
+    @NotNull(message = "ToUserId should not be empty")
     private UUID toUserId;
 }

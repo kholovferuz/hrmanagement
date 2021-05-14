@@ -9,9 +9,9 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class TurniketHistoryDTO {
-    @NotNull
+    @NotNull(message = "Data about enter or exit should not be empty")
     private boolean enterOrExit;
 
-    @NotNull
+    @NotNull(message = "TurniketId should not be empty")
     private Integer turniketId;
 }

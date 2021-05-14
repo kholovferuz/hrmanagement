@@ -15,12 +15,19 @@ import java.util.Collections;
 
 @Component
 public class DataLoader implements CommandLineRunner {
+
+    final RoleRepository roleRepository;
+    final UserRepository userRepository;
+    final PasswordEncoder passwordEncoder;
+
     @Autowired
-    RoleRepository roleRepository;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    public DataLoader(RoleRepository roleRepository,
+                      UserRepository userRepository,
+                      PasswordEncoder passwordEncoder) {
+        this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Value(value = "${spring.datasource.initialization-mode}")
     private String initialMode;

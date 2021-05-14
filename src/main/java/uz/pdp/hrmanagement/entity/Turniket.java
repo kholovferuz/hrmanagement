@@ -14,6 +14,6 @@ public class Turniket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private User user;
 }

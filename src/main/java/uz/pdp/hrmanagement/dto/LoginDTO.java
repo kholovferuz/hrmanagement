@@ -10,10 +10,10 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class LoginDTO {
-    @NotNull
+    @NotNull(message = "Username should not be empty")
     @Email
     private String username;
 
-    @NotNull
+    @NotNull(message = "Password should not be empty")
     private String password;
 }

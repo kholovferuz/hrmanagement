@@ -24,6 +24,6 @@ public class TurniketHistory {
     private LocalTime time;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Turniket turniket;
 }

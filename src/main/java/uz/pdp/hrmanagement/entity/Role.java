@@ -10,6 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
