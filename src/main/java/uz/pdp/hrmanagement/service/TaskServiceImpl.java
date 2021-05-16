@@ -47,7 +47,7 @@ public class TaskServiceImpl implements TaskService {
             message.setTo(email);
             message.setSubject("Task for Staff");
             message.setText("Follow the link and do the attached task! " +
-                    "\nhttp://localhost:8080/api/auth/doTheTask?email=" + email + "&taskId=" + taskId);
+                    "\nhttp://localhost:8080/api/doTheTask?email=" + email + "&taskId=" + taskId);
             javaMailSender.send(message);
         } catch (Exception e) {
             e.printStackTrace();
@@ -149,13 +149,14 @@ public class TaskServiceImpl implements TaskService {
     public void sendEmailToTheManagers(String email, UUID id) {
         try {
             Optional<User> optionalUser = userRepository.findById(id);
-
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("noreply@gmail.com");
-            message.setTo(email);
-            message.setSubject("Task completed");
-            message.setText("The worker " + optionalUser.get().getFirstName() + " " + optionalUser.get().getLastName() + " has finished his/her task!");
-            javaMailSender.send(message);
+            if (optionalUser.isPresent()) {
+                SimpleMailMessage message = new SimpleMailMessage();
+                message.setFrom("noreply@gmail.com");
+                message.setTo(email);
+                message.setSubject("Task completed");
+                message.setText("The worker " + optionalUser.get().getFirstName() + " " + optionalUser.get().getLastName() + " has finished his/her task!");
+                javaMailSender.send(message);
+            }
         } catch (
                 Exception e) {
             e.printStackTrace();
@@ -172,8 +173,9 @@ public class TaskServiceImpl implements TaskService {
         if (optionalTask.isEmpty()) {
             return new Response("Task with this id is not found", false);
         }
-        if (optionalTask.get().getToUser().equals(userContext)) {
-            Task task = optionalTask.get();
+        Task task = optionalTask.get();
+        if (task.getToUser().getUsername().equals(userContext.getUsername())) {
+
             if (task.getTaskStatus().equals(TaskStatus.COMPLETED)) {
                 return new Response("The task has already been completed!", false);
             }

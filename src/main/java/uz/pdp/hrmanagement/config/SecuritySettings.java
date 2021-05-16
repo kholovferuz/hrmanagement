@@ -60,8 +60,8 @@ public class SecuritySettings extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/auth/verifyEmail",
                         "/api/auth/login",
-                        "/api/auth/enterOrExit",
-                        "/api/auth/doTheTask").permitAll()
+                        "/api/enterOrExit",
+                        "/api/doTheTask").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
